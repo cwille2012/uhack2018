@@ -15,9 +15,10 @@ export const Routes = () => (
   <Route>
     <MainPlate>
       <Nav.Plate color="BLUE">
-        <Nav.Item icon="Home" to="/healthdata" label="Health Data" />
+        <Nav.Item icon="Home" to="/" label="Health Data" />
         <Nav.Item icon="Planet" to="/map" label="3D Map" />
         <Nav.Item icon="MapPin" to="/line" label="Point Map" />
+        <Nav.Item icon="DataBuilder" to="/healthdata" label="Health Data" />
         <Nav.Item icon="Gear" to="/properties" label="Settings" />
       </Nav.Plate>
       <ContentPlate>

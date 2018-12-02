@@ -40,6 +40,12 @@ class RecordEditDialog extends React.Component {
             <Field name="speed" label="Speed" type="number" component={ InputField } />
           </Grid.Box>
           <Grid.Box>
+            <Field name="altitude" label="Altitude" type="number" component={ InputField } />
+          </Grid.Box>
+          <Grid.Box>
+            <Field name="heartRate" label="Heart Rate" type="number" component={ InputField } />
+          </Grid.Box>
+          <Grid.Box>
             <Field name="stepCount" label="Step Count" type="number" component={ InputField } />
           </Grid.Box>
           <Grid.Box>

@@ -5,6 +5,7 @@ import { MainPlate, ContentPlate, Nav } from '../components';
 import { ProtectedRoute } from '../shared/components';
 import { Auth } from './auth';
 import { Properties } from './properties';
+import { healthdata } from './healthdata';
 
 export const Routes = () => (
   <Switch>
@@ -17,7 +18,8 @@ export const Routes = () => (
       <ContentPlate>
         <Switch>
           <ProtectedRoute exact path="/properties" component={Properties} />
-          <Redirect to="/properties" />
+          <ProtectedRoute exact path="/healthdata" component={healthdata} />
+          <Redirect to="/healthdata" />
         </Switch>
       </ContentPlate>
     </MainPlate>

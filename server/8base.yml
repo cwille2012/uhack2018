@@ -1,0 +1,6 @@
+functions:
+  propertyShare:
+    handler:
+      code: src/propertyShare.js
+    type: resolver
+    schema: src/schema.graphql

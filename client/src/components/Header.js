@@ -5,6 +5,7 @@ import { Grid } from '@8base/boost';
 
 import { UserDropdown } from './UserDropdown.js';
 import logo from 'images/8base-logo-red-black.svg';
+import newLogo from 'images/rrlogo2.png';
 
 const HeaderTag = styled(Grid.Layout)({
   height: '6rem',
@@ -22,7 +23,7 @@ const Header = () => (
     <HeaderTag columns="1fr auto" gap="lg">
       <Grid.Box justifyContent="center">
         <Link to="/">
-          <HeaderLogoTag src={logo} alt="8base logo" />
+          <HeaderLogoTag src={newLogo} alt="8base logo" />
         </Link>
       </Grid.Box>
       <Grid.Box justifyContent="center">
@@ -33,3 +34,4 @@ const Header = () => (
 );
 
 export { Header };
+//<HeaderLogoTag src={logo} alt="8base logo" />

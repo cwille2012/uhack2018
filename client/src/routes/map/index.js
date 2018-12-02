@@ -49,9 +49,9 @@ export class map extends Component {
     super(props);
     this.state = {
       viewState: {
-        longitude: -80.2790233835,
-        latitude: 25.7191965746,
-        zoom: 18.5,
+        longitude: -80.27898336026118,
+        latitude: 25.720129200013538,
+        zoom: 17.5,
         minZoom: 15,
         maxZoom: 20,
         pitch: 40,
@@ -258,9 +258,6 @@ export class map extends Component {
 
     return (
       <Card.Plate padding="md" stretch>
-        <Card.Header>
-          <Heading type="h4" text="Map View" />
-        </Card.Header>
         <Card.Body padding="none" stretch>
           {this.renderTooltip()}
           <Query query={PROPERTIES_LIST_QUERY}>

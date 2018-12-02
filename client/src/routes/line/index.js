@@ -25,6 +25,7 @@ const PROPERTIES_LIST_QUERY = gql`
               lat
               stepCount
               heartRate
+              speed
           }
       }
   }`;
@@ -40,9 +41,9 @@ export class line extends Component {
     super(props);
     this.state = {
       viewState: {
-        longitude: -80.2790233835,
-        latitude: 25.7191965746,
-        zoom: 18.5,
+        longitude: -80.27898336026118,
+        latitude: 25.720129200013538,
+        zoom: 17.5,
         minZoom: 15,
         maxZoom: 20,
         pitch: 40,
@@ -128,9 +129,33 @@ export class line extends Component {
 
     for (var i in data) {
       if (i > 1) {
+        var heartRate = Number(data[i][2]);
+        var color = [0, 0, 255];
+
+        if (heartRate > 80) {
+          color = [100, 0, 255];
+        }
+
+        if (heartRate > 90) {
+          color = [160, 0, 255];
+        }
+
+        if (heartRate > 100) {
+          color = [255, 0, 180];
+        }
+
+        if (heartRate > 105) {
+          color = [255, 0, 80];
+        }
+
+        if (heartRate > 115) {
+          color = [255, 0, 0];
+        }
+
         lineData.push({
           start: [data[i-1][0], data[i-1][1]],
-          end: [data[i][0], data[i][1]]
+          end: [data[i][0], data[i][1]],
+          color: color
         })
       }
     }
@@ -153,11 +178,11 @@ export class line extends Component {
       new LineLayer({
         id: 'lines',
         data: lineData,
-        strokeWidth: d => {return 2},
+        strokeWidth: d => {return 3},
         fp64: false,
         getSourcePosition: d => d.start,
         getTargetPosition: d => d.end,
-        getColor: d => [255, 0, 0],
+        getColor: d => d.color,
         //pickable: Boolean(this.props.onHover),
         onHover: {
 
@@ -198,16 +223,13 @@ export class line extends Component {
 
     return (
       <Card.Plate padding="md" stretch>
-        <Card.Header>
-          <Heading type="h4" text="Map View" />
-        </Card.Header>
         <Card.Body padding="none" stretch>
           {this.renderTooltip()}
           <Query query={PROPERTIES_LIST_QUERY}>
             {({ loading, error, data }) => {
               if (loading) return "Loading...";
               if (error) return `Error! ${error.message}`;
-              var healthData = data.healthDataList.items.map(d => [Number(d.lon), Number(d.lat), Number(d.heartRate), Number(d.stepCount)]);
+              var healthData = data.healthDataList.items.map(d => [Number(d.lon), Number(d.lat), Number(d.heartRate), Number(d.speed)]);
               return (
                 <DeckGL
                   layers={this._renderLayers(healthData)}

@@ -84,9 +84,6 @@ let HealthDataTable = ({ records, openModal, closeModal }) => (
         )
       }
     </Table.Body>
-    <Table.Footer justifyContent="center">
-      <Button onClick={ () => openModal(RecordCreateDialog.id) }>Create Property</Button>
-    </Table.Footer>
   </Table.Plate>
 );
 

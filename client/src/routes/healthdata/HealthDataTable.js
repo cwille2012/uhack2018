@@ -20,6 +20,8 @@ let HealthDataTable = ({ records, openModal, closeModal }) => (
       <Table.HeaderCell>lon</Table.HeaderCell>
       <Table.HeaderCell>lat</Table.HeaderCell>
       <Table.HeaderCell>speed</Table.HeaderCell>
+      <Table.HeaderCell>altitude</Table.HeaderCell>
+      <Table.HeaderCell>heartRate</Table.HeaderCell>
       <Table.HeaderCell>stepCount</Table.HeaderCell>
       <Table.HeaderCell>distance</Table.HeaderCell>
       <Table.HeaderCell>gender</Table.HeaderCell>
@@ -44,6 +46,12 @@ let HealthDataTable = ({ records, openModal, closeModal }) => (
             </Table.BodyCell>
             <Table.BodyCell>
               { record.speed }
+            </Table.BodyCell>
+            <Table.BodyCell>
+              { record.altitude }
+            </Table.BodyCell>
+            <Table.BodyCell>
+              { record.heartRate }
             </Table.BodyCell>
             <Table.BodyCell>
               { record.stepCount }
@@ -91,6 +99,8 @@ query HealthRecord {
             lon
             lat
             speed
+            altitude
+            heartRate
             stepCount
             distance
             gender

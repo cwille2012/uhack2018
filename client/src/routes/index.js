@@ -16,7 +16,7 @@ export const Routes = () => (
       <Nav.Plate color="BLUE">
         <Nav.Item icon="Home" to="/healthdata" label="Health Data" />
         <Nav.Item icon="MapPin" to="/map" label="Map View" />
-        <Nav.Item icon="Gear" to="/properties" label="Properties" />
+        <Nav.Item icon="Gear" to="/properties" label="Settings" />
       </Nav.Plate>
       <ContentPlate>
         <Switch>

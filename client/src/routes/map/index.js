@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import { Card, Heading } from '@8base/boost';
 
-import { graphql, Query } from 'react-apollo';
+import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import {StaticMap} from 'react-map-gl';
@@ -121,8 +121,6 @@ export class map extends Component {
     console.log(data)
 
     const {upperPercentile = 100} = this.props;
-
-    var data = this.state.data || this.props.data;
 
     var radius = Number(this.state.radius);
     var coverage = Number(this.state.coverage);

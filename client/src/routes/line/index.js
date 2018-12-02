@@ -6,16 +6,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import {StaticMap} from 'react-map-gl';
-import DeckGL, {HexagonLayer} from 'deck.gl';
-
-const LIGHT_SETTINGS = {
-  lightsPosition: [-0.144528, 49.739968, 8000, -3.807751, 54.104682, 8000],
-  ambientRatio: 0.4,
-  diffuseRatio: 0.6,
-  specularRatio: 0.2,
-  lightsStrength: [0.8, 0.0, 0.8, 0.0],
-  numberOfLights: 2
-};
+import DeckGL, {LineLayer, ScatterplotLayer} from 'deck.gl';
 
 const colorRange = [
   [1, 152, 189],
@@ -40,7 +31,7 @@ const PROPERTIES_LIST_QUERY = gql`
 
 const elevationScale = {min: 0, max: 5000};
 
-export class map extends Component {
+export class line extends Component {
   static get defaultColorRange() {
     return colorRange;
   }
@@ -133,95 +124,44 @@ export class map extends Component {
 
     //console.log(data)
 
-    const {upperPercentile = 100} = this.props;
+    var lineData = []
 
-    var radius = Number(this.state.radius);
-    var coverage = Number(this.state.coverage);
-    var opacity = Number(this.state.opacity);
-    var scale = Number(this.state.scale);
+    for (var i in data) {
+      if (i > 1) {
+        lineData.push({
+          start: [data[i-1][0], data[i-1][1]],
+          end: [data[i][0], data[i][1]]
+        })
+      }
+    }
 
-    var elevationDomain = [0, 160];
+    //console.log(lineData)
 
     return [
-      new HexagonLayer({
-        onClick: info => {
-          console.log('Clicked:', info.object.colorValue)
-          this.setState({
-            clickedValue: info.object.colorValue
-          })
-        },
-        onHover: info => {
-          if (info != null) {
-            //console.log(info)
-            if (info.x != null && info.y != null) {
-              if (info.object != null) {
-                //console.log('Heart rate: ' + Number(info.object.elevationValue+50));
-                //console.log('Step count: ' + Number(info.object.colorValue));
-                this.setState({
-                  cursor: {
-                    x: info.x,
-                    y: info.y,
-                    present: true
-                  },
-                  hoveredObject: {
-                    lon: info.object.centroid[0],
-                    lat: info.object.centroid[1],
-                    heartRate: Number(info.object.elevationValue+50),
-                    stepCount: Number(info.object.colorValue)
-                  }
-                })
-              }
-            } else {
-              this.setState({
-                cursor: {
-                  x: 0,
-                  y: 0,
-                  present: false
-                },
-                hoveredObject: null
-              })
-            }
-          } else {
-            this.setState({
-              cursor: {
-                x: 0,
-                y: 0,
-                present: false
-              },
-              hoveredObject: null
-            })
-          }
-        },
-        id: 'heatmap',
-        colorRange,
-        coverage,
-        data,
-        elevationDomain: elevationDomain,
-        elevationRange: [0, 1000],
-        elevationScale: scale,
-        extruded: true,
+      new ScatterplotLayer({
+        id: 'points',
+        data: data,
+        radiusScale: .5,
         getPosition: d => [d[0], d[1]],
-        getElevationValue: points => {
-          var avg = 0;
-          for(let i = 0; i < (points.length); i++) {
-            avg += points[i][2];
-          }
-          avg = avg / (points.length);
-          return avg - 50;
-        },
-        getColorValue: points => {
-          var avg = 0;
-          for(let i = 0; i < (points.length); i++) {
-            avg += points[i][3];
-          }
-          avg = avg / (points.length);
-          return avg;
-        },
-        lightSettings: LIGHT_SETTINGS,
-        opacity: opacity,
-        pickable: true,
-        radius,
-        upperPercentile
+        getColor: d => [0, 0, 255],
+        getRadius: d => {return 1},
+        //pickable: Boolean(this.props.onHover),
+        onHover: {
+
+        }
+      }),
+      new LineLayer({
+        id: 'lines',
+        data: lineData,
+        strokeWidth: d => {return 2},
+        fp64: false,
+        getSourcePosition: d => d.start,
+        getTargetPosition: d => d.end,
+        getColor: d => [255, 0, 0],
+        //pickable: Boolean(this.props.onHover),
+        onHover: {
+
+        }
       })
     ];
   }

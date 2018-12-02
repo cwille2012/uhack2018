@@ -9,7 +9,7 @@ import { TOAST_SUCCESS_MESSAGE } from 'shared/constants';
 
 const PROPERTY_SHARE_DIALOG_ID = 'PROPERTY_SHARE_DIALOG_ID';
 
-class PropertyShareDialog extends React.Component {
+class RecordShareDialog extends React.Component {
   static contextType = ModalContext;
 
   createOnSubmit = R.memoize((id) => async (data) => {
@@ -56,16 +56,16 @@ class PropertyShareDialog extends React.Component {
   }
 }
 
-PropertyShareDialog = graphql(sharedGraphQL.PROPERTY_SHARE_MUTATION, {
+RecordShareDialog = graphql(sharedGraphQL.PROPERTY_SHARE_MUTATION, {
   name: 'propertyShare',
   options: {
-    refetchQueries: ['PropertiesList'],
+    refetchQueries: ['HealthDataList'],
     context: {
-      [TOAST_SUCCESS_MESSAGE]: 'Property successfuly shared'
+      [TOAST_SUCCESS_MESSAGE]: 'Record successfuly shared'
     },
   },
-})(PropertyShareDialog);
+})(RecordShareDialog);
 
-PropertyShareDialog.id = PROPERTY_SHARE_DIALOG_ID;
+RecordShareDialog.id = PROPERTY_SHARE_DIALOG_ID;
 
-export { PropertyShareDialog };
+export { RecordShareDialog };

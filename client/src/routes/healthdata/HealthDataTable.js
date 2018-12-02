@@ -3,18 +3,20 @@ import { compose } from 'recompose';
 import * as R from 'ramda';
 import { Table, Button, Dropdown, Icon, Menu, withModal } from '@8base/boost';
 import { graphql } from 'react-apollo';
-import { DateTime } from 'luxon';
 import gql from 'graphql-tag';
 
-import { PropertyCreateDialog } from './PropertyCreateDialog';
-import { PropertyEditDialog } from './PropertyEditDialog';
-import { PropertyDeleteDialog } from './PropertyDeleteDialog';
-import { PropertyShareDialog } from './PropertyShareDialog';
+import { RecordCreateDialog } from './RecordCreateDialog';
+import { RecordEditDialog } from './RecordEditDialog';
+import { RecordDeleteDialog } from './RecordDeleteDialog';
+import { RecordShareDialog } from './RecordShareDialog';
+
+//https://app.8base.com/data-builder/5c031b039f19e0d850e24fed/schema/new
 
 let HealthDataTable = ({ records, openModal, closeModal }) => (
   <Table.Plate>
     <Table.Header columns="repeat(10, 1fr) 60px">
       <Table.HeaderCell>id</Table.HeaderCell>
+      <Table.HeaderCell>time</Table.HeaderCell>
       <Table.HeaderCell>lon</Table.HeaderCell>
       <Table.HeaderCell>lat</Table.HeaderCell>
       <Table.HeaderCell>speed</Table.HeaderCell>
@@ -30,6 +32,9 @@ let HealthDataTable = ({ records, openModal, closeModal }) => (
           <Table.BodyRow columns="repeat(10, 1fr) 60px" key={ record.id }>
             <Table.BodyCell>
               { record.id }
+            </Table.BodyCell>
+            <Table.BodyCell>
+              { record.time }
             </Table.BodyCell>
             <Table.BodyCell>
               { record.lon }
@@ -58,9 +63,9 @@ let HealthDataTable = ({ records, openModal, closeModal }) => (
                   {
                     ({ closeDropdown }) => (
                       <Menu.Plate>
-                        <Menu.Item onClick={ () => { openModal(PropertyEditDialog.id, { initialValues: record }); closeDropdown(); } }>Edit</Menu.Item>
-                        <Menu.Item onClick={ () => { openModal(PropertyShareDialog.id, { id: record.id }); closeDropdown(); } }>Share</Menu.Item>
-                        <Menu.Item onClick={ () => { openModal(PropertyDeleteDialog.id, { id: record.id }); closeDropdown(); } }>Delete</Menu.Item>
+                        <Menu.Item onClick={ () => { openModal(RecordEditDialog.id, { initialValues: record }); closeDropdown(); } }>Edit</Menu.Item>
+                        <Menu.Item onClick={ () => { openModal(RecordShareDialog.id, { id: record.id }); closeDropdown(); } }>Share</Menu.Item>
+                        <Menu.Item onClick={ () => { openModal(RecordDeleteDialog.id, { id: record.id }); closeDropdown(); } }>Delete</Menu.Item>
                       </Menu.Plate>
                     )
                   }
@@ -72,7 +77,7 @@ let HealthDataTable = ({ records, openModal, closeModal }) => (
       }
     </Table.Body>
     <Table.Footer justifyContent="center">
-      <Button onClick={ () => openModal(PropertyCreateDialog.id) }>Create Property</Button>
+      <Button onClick={ () => openModal(RecordCreateDialog.id) }>Create Property</Button>
     </Table.Footer>
   </Table.Plate>
 );
@@ -82,6 +87,7 @@ query HealthRecord {
     healthDataList {
         items {
             id
+            time
             lon
             lat
             speed

@@ -9,7 +9,7 @@ import { TOAST_SUCCESS_MESSAGE } from 'shared/constants';
 
 const PROPERTY_DELETE_DIALOG_ID = 'PROPERTY_DELETE_DIALOG_ID';
 
-class PropertyDeleteDialog extends React.Component {
+class RecordDeleteDialog extends React.Component {
   static contextType = ModalContext;
 
   createOnSubmit = R.memoize((id) => async () => {
@@ -24,13 +24,13 @@ class PropertyDeleteDialog extends React.Component {
 
   renderFormContent = ({ handleSubmit, invalid, submitting }) => (
     <form onSubmit={ handleSubmit }>
-      <Dialog.Header title="Delete Property" onClose={ this.onClose } />
+      <Dialog.Header title="Delete Record" onClose={ this.onClose } />
       <Dialog.Body scrollable>
-        Are you really want to delete property?
+        Do you really want to delete record?
       </Dialog.Body>
       <Dialog.Footer>
         <Button color="neutral" variant="outlined" disabled={ submitting } onClick={ this.onClose }>Cancel</Button>
-        <Button color="red" type="submit" text="Delete Property" disabled={ invalid } loading={ submitting } />
+        <Button color="red" type="submit" text="Delete Record" disabled={ invalid } loading={ submitting } />
       </Dialog.Footer>
     </form>
   );
@@ -52,16 +52,16 @@ class PropertyDeleteDialog extends React.Component {
   }
 }
 
-PropertyDeleteDialog = graphql(sharedGraphQL.PROPERTY_DELETE_MUTATION, {
+RecordDeleteDialog = graphql(sharedGraphQL.PROPERTY_DELETE_MUTATION, {
   name: 'propertyDelete',
   options: {
-    refetchQueries: ['PropertiesList'],
+    refetchQueries: ['HealthDataList'],
     context: {
-      [TOAST_SUCCESS_MESSAGE]: 'Property successfuly deleted'
+      [TOAST_SUCCESS_MESSAGE]: 'Record successfuly deleted'
     },
   },
-})(PropertyDeleteDialog);
+})(RecordDeleteDialog);
 
-PropertyDeleteDialog.id = PROPERTY_DELETE_DIALOG_ID;
+RecordDeleteDialog.id = PROPERTY_DELETE_DIALOG_ID;
 
-export { PropertyDeleteDialog };
+export { RecordDeleteDialog };

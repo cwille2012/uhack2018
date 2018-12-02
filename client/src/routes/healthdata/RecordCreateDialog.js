@@ -1,16 +1,14 @@
 import React from 'react';
 import { Form, Field } from '@8base/forms';
-import { Dialog, Grid, Button, InputField, CheckboxField, ModalContext } from '@8base/boost';
+import { Dialog, Grid, Button, InputField, ModalContext } from '@8base/boost';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import { TOAST_SUCCESS_MESSAGE } from 'shared/constants';
 
-import { FileInputField } from 'shared/components';
-
 const PROPERTY_CREATE_DIALOG_ID = 'PROPERTY_CREATE_DIALOG_ID';
 
-class PropertyCreateDialog extends React.Component {
+class RecordCreateDialog extends React.Component {
   static contextType = ModalContext;
 
   onSubmit = async (data) => {
@@ -25,32 +23,29 @@ class PropertyCreateDialog extends React.Component {
 
   renderFormContent = ({ handleSubmit, invalid, submitting, pristine }) => (
     <form onSubmit={ handleSubmit }>
-      <Dialog.Header title="New Property" onClose={ this.onClose } />
+      <Dialog.Header title="New Health Record" onClose={ this.onClose } />
       <Dialog.Body scrollable>
         <Grid.Layout gap="sm" stretch>
           <Grid.Box>
-            <Field name="pictures" label="Pictures" component={ FileInputField } maxFiles={ 20 } public={ true } />
+            <Field name="time" label="Time" type="text" component={ InputField } />
           </Grid.Box>
           <Grid.Box>
-            <Field name="title" label="Title" type="text" component={ InputField } />
+            <Field name="lat" label="Latitude" type="number" component={ InputField } />
           </Grid.Box>
           <Grid.Box>
-            <Field name="description" label="Description" type="text" component={ InputField } />
+            <Field name="lon" label="Longitude" type="number" component={ InputField } />
           </Grid.Box>
           <Grid.Box>
-            <Field name="bedrooms" label="Bedrooms" type="text" component={ InputField } />
+            <Field name="speed" label="Speed" type="number" component={ InputField } />
           </Grid.Box>
           <Grid.Box>
-            <Field name="sqFootage" label="Sq Footage" type="text" component={ InputField } />
+            <Field name="stepCount" label="Step Count" type="number" component={ InputField } />
           </Grid.Box>
           <Grid.Box>
-            <Field name="bathrooms" label="Bathrooms" type="text" component={ InputField } />
+            <Field name="distance" label="Distance" type="number" component={ InputField } />
           </Grid.Box>
           <Grid.Box>
-            <Field name="garage" label="Garage" component={ CheckboxField } />
-          </Grid.Box>
-          <Grid.Box>
-            <Field name="pool" label="Pool" component={ CheckboxField } />
+            <Field name="gender" label="Gender" type="text" component={ InputField } />
           </Grid.Box>
         </Grid.Layout>
       </Dialog.Body>
@@ -64,7 +59,7 @@ class PropertyCreateDialog extends React.Component {
   render() {
     return (
       <Dialog.Plate id={ PROPERTY_CREATE_DIALOG_ID } size="sm">
-        <Form type="CREATE" tableSchemaName="Properties" onSubmit={ this.onSubmit }>
+        <Form type="CREATE" tableSchemaName="Health Data" onSubmit={ this.onSubmit }>
           { this.renderFormContent }
         </Form>
       </Dialog.Plate>
@@ -73,23 +68,22 @@ class PropertyCreateDialog extends React.Component {
 }
 
 const PROPERTY_CREATE_MUTATION = gql`
-  mutation PropertyCreate($data: PropertyCreateInput!) {
-    propertyCreate(data: $data) {
+mutation HealthDatumCreateMutation($data: HealthDatumCreateInput!) {
+  healthDatumCreate(data: $data) {
       id
-    }
   }
-`;
+}`;
 
-PropertyCreateDialog = graphql(PROPERTY_CREATE_MUTATION, {
+RecordCreateDialog = graphql(PROPERTY_CREATE_MUTATION, {
   name: 'propertyCreate',
   options: {
-    refetchQueries: ['PropertiesList'],
+    refetchQueries: ['HealthDataList'],
     context: {
-      [TOAST_SUCCESS_MESSAGE]: 'Property successfuly created'
+      [TOAST_SUCCESS_MESSAGE]: 'Record successfuly created'
     },
   },
-})(PropertyCreateDialog);
+})(RecordCreateDialog);
 
-PropertyCreateDialog.id = PROPERTY_CREATE_DIALOG_ID;
+RecordCreateDialog.id = PROPERTY_CREATE_DIALOG_ID;
 
-export { PropertyCreateDialog };
+export { RecordCreateDialog };

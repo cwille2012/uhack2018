@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card, Heading } from '@8base/boost';
 
-import { PropertyCreateDialog } from './PropertyCreateDialog';
-import { PropertyEditDialog } from './PropertyEditDialog';
-import { PropertyShareDialog } from './PropertyShareDialog';
-import { PropertyDeleteDialog } from './PropertyDeleteDialog';
+import { RecordCreateDialog } from './RecordCreateDialog';
+import { RecordEditDialog } from './RecordEditDialog';
+import { RecordShareDialog } from './RecordShareDialog';
+import { RecordDeleteDialog } from './RecordDeleteDialog';
 import { HealthDataTable } from './HealthDataTable';
 
 const healthdata = () => (
@@ -13,10 +13,10 @@ const healthdata = () => (
       <Heading type="h4" text="Health Data" />
     </Card.Header>
 
-    <PropertyCreateDialog />
-    <PropertyEditDialog />
-    <PropertyShareDialog />
-    <PropertyDeleteDialog />
+    <RecordCreateDialog />
+    <RecordEditDialog />
+    <RecordShareDialog />
+    <RecordDeleteDialog />
 
     <Card.Body padding="none" stretch>
       <HealthDataTable />

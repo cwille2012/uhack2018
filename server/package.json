@@ -1,12 +1,27 @@
 {
-  "name": "8base-app-example-server",
-  "version": "1.0.0",
-  "dependencies": {
-    "graphql": "^14.0.2",
-    "graphql-request": "^1.6.0",
-    "graphql-tag": "^2.10.0",
-    "nodemailer": "^4.6.8",
-    "path": "^0.12.7"
+  "name": "server-app-bridge",
+  "version": "0.0.1",
+  "description": "Communications bridge for iPhone (server)",
+  "repository": "https://github.com/cwille2012/server-app-bridge.git",
+  "author": "Christopher Wille",
+  "license": "MIT",
+  "scripts": {
+    "start-dev": "nodemon -r dotenv/config ./src/server/server.js",
+    "start": "node ./src/server/server.js"
   },
-  "license": "MIT"
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.4",
+    "jsonschema": "^1.2.4",
+    "mongodb": "^3.1.9",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "dotenv": "^6.1.0",
+    "nodemon": "^1.18.4"
+  }
 }

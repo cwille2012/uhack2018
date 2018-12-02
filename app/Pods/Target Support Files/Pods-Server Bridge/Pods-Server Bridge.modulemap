@@ -1,0 +1,6 @@
+framework module Pods_Server_Bridge {
+  umbrella header "Pods-Server Bridge-umbrella.h"
+
+  export *
+  module * { export * }
+}

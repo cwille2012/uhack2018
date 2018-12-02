@@ -1,3 +1,0 @@
-extend type Mutation {
-  propertyShare(id: ID!, email: String!): SuccessResponse
-}

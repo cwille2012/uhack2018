@@ -46,10 +46,10 @@ export class map extends Component {
         bearing: 0
       },
       elevationScale: elevationScale.min,
-      radius: 80,
+      radius: 25,
       coverage: 0.9,
       opacity: 1,
-      scale: 300,
+      scale: 50,
       source: "1",
       data: null,
       clickedValue: 0
@@ -148,11 +148,13 @@ export class map extends Component {
         extruded: true,
         getPosition: d => [d[0], d[1]],
         getElevationValue: points => {
+          console.log(points)
           let avg = 0;
           for(let i = 0; i < points.length; i++) {
             avg += points[i][2];
           }
           avg = avg / points.length;
+          console.log(avg)
           return avg;
         },
         getColorValue: points => {
